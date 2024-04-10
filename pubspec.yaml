@@ -36,6 +36,12 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
 
+  # Package for routing in Flutter applications
+  go_router: ^10.1.2 
+
+  # Package for scanning QR codes
+  mobile_scanner: ^3.3.0  
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
