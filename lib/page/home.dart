@@ -51,7 +51,13 @@ class _HomePageState extends State<HomePage> {
               onPressed: () => {
                 GoRouter.of(context).push(Routes.incomingRequest),
               },
-              child: const Text("Test"),
+              child: const Text("Approve Test"),
+            ),
+            MaterialButton(
+              onPressed: () => {
+                GoRouter.of(context).push(Routes.pairing),
+              },
+              child: const Text("Setup Test"),
             ),
           ],
         ),
