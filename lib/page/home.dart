@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:veracrypt_2fa_app/Routes.dart';
+import 'package:veracrypt_2fa_app/api.dart';
 import 'package:veracrypt_2fa_app/widget/app_bar.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,6 +14,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    var partnerPcName = API.partnerPCName;
+
     return Scaffold(
       appBar: const VeraCryptAppBar(),
       body: Center(
@@ -24,7 +27,7 @@ class _HomePageState extends State<HomePage> {
               size: 100,
               color: Colors.grey.shade800,
             ),
-            const Row(
+            partnerPcName != null ? Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
@@ -37,21 +40,21 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
                 ),
                 Text(
-                  'Robin\'s PC',
+                  partnerPcName,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
-            ),
+            ) : const Text("Noch nicht mit einem Computer verbunden."),
             const Padding(padding: EdgeInsets.fromLTRB(0, 128, 0, 0)),
             const Text("Aktuell sind keine Anfragen vorhanden."),
             MaterialButton(
               onPressed: () => {
                 GoRouter.of(context).push(Routes.incomingRequest),
               },
-              child: const Text("Approve Test"),
+              child: const Text("Pull Requests"),
             ),
             MaterialButton(
               onPressed: () => {
