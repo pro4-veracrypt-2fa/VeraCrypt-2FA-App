@@ -32,16 +32,15 @@ class PairingPage extends StatelessWidget {
   _pair(BuildContext context, String pairingCode) async {
     var partnerPcName = await API.pair(pairingCode);
     if (partnerPcName != null) {
-      Future.delayed(Duration.zero, () async => GoRouter.of(context).go(Routes.home));
-    }
-    else {
+      Future.delayed(
+          Duration.zero, () async => GoRouter.of(context).go(Routes.home));
+    } else {
       Snackbar.showAsync(context, "Ungültiger Pairing-Code.");
     }
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: const VeraCryptAppBar(),
       body: Column(
@@ -59,28 +58,29 @@ class PairingPage extends StatelessWidget {
           ),
           const FirstSteps(),
           Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: TextField(
-                      decoration: const InputDecoration(
-                        labelText: "Pairing-Code (Temporär)",
-                        border: OutlineInputBorder(),
-                      ),
-                      controller: _pairingCodeController,
-                    ),
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: TextField(
+                  decoration: const InputDecoration(
+                    labelText: "Pairing-Code (Temporär)",
+                    border: OutlineInputBorder(),
                   ),
-                  const Padding(padding: EdgeInsets.fromLTRB(16, 0, 16, 0)),
-                  Expanded(
-                    child: MaterialButton(
-                      onPressed: () => _pair(context, _pairingCodeController.text.trim()),
-                      color: Colors.teal.shade500,
-                      textColor: Colors.white,
-                      child: const Text("Senden"),
-                    ),
-                  ),
-                ],
+                  controller: _pairingCodeController,
+                ),
               ),
+              const Padding(padding: EdgeInsets.fromLTRB(16, 0, 16, 0)),
+              Expanded(
+                child: MaterialButton(
+                  onPressed: () =>
+                      _pair(context, _pairingCodeController.text.trim()),
+                  color: Colors.teal.shade500,
+                  textColor: Colors.white,
+                  child: const Text("Senden"),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
