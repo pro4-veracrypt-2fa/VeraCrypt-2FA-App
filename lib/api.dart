@@ -6,7 +6,7 @@ typedef ComparisonCode = String;
 
 class API {
   // ignore: constant_identifier_names
-  static const String BASE_URL = 'http://100.93.220.13:5000';
+  static const String BASE_URL = 'http://100.89.24.72:6000';
   static final Dio _dio = Dio();
   static final String _smartphoneId = UniqueKey().toString();
 
