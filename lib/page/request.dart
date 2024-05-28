@@ -12,7 +12,7 @@ class IncomingRequestPage extends StatefulWidget {
 }
 
 class _IncomingRequestPageState extends State<IncomingRequestPage> {
-  Future<void> _verify() async {
+  _verify(BuildContext context) async {
     var comparisonCode = _comparisonCodeController.text;
     if (comparisonCode.isEmpty) {
       await Snackbar.showAsync(
@@ -22,15 +22,18 @@ class _IncomingRequestPageState extends State<IncomingRequestPage> {
 
     var verified = await API.verify(comparisonCode);
     if (verified) {
+      // ignore: use_build_context_synchronously
       await Snackbar.showAsync(context, "Start autorisiert");
     } else {
+      // ignore: use_build_context_synchronously
       await Snackbar.showAsync(context, "Ungültiger Vergleichswert");
     }
 
+    // ignore: use_build_context_synchronously
     GoRouter.of(context).pop();
   }
 
-  final _comparisonCodeController = TextEditingController(text: '');
+  final _comparisonCodeController = TextEditingController();
 
   @override
   void initState() {
@@ -38,9 +41,10 @@ class _IncomingRequestPageState extends State<IncomingRequestPage> {
 
     API.pull().then((comparisonCode) {
       if (comparisonCode != null) {
-        _comparisonCodeController.text = comparisonCode;
-      }
-      else {
+        setState(() {
+          _comparisonCodeController.text = '';
+        });
+      } else {
         GoRouter.of(context).pop();
       }
     });
@@ -48,7 +52,9 @@ class _IncomingRequestPageState extends State<IncomingRequestPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_comparisonCodeController.text.isEmpty) {
+    // TODO: This will be removed in a future version
+    // ignore: unnecessary_null_comparison
+    if (_comparisonCodeController.text == null) {
       return const Scaffold(
         appBar: VeraCryptAppBar(),
         body: Center(
@@ -120,7 +126,7 @@ class _IncomingRequestPageState extends State<IncomingRequestPage> {
                   const Padding(padding: EdgeInsets.fromLTRB(16, 0, 16, 0)),
                   Expanded(
                     child: MaterialButton(
-                      onPressed: () => _verify(),
+                      onPressed: () => _verify(context),
                       color: Colors.teal.shade500,
                       textColor: Colors.white,
                       child: const Text("Senden"),
