@@ -20,7 +20,7 @@ class _IncomingRequestPageState extends State<IncomingRequestPage> {
       return;
     }
 
-    var verified = await API.verify(comparisonCode);
+    var verified = await API.verify(context, comparisonCode);
     if (verified) {
       // ignore: use_build_context_synchronously
       await Snackbar.showAsync(context, "Start autorisiert");
@@ -39,7 +39,7 @@ class _IncomingRequestPageState extends State<IncomingRequestPage> {
   void initState() {
     super.initState();
 
-    API.pull().then((comparisonCode) {
+    API.pull(context).then((comparisonCode) {
       if (comparisonCode != null) {
         setState(() {
           _comparisonCodeController.text = '';

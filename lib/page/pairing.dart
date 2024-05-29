@@ -30,13 +30,11 @@ class PairingPage extends StatelessWidget {
   }
 
   _pair(BuildContext context, String pairingCode) async {
-    var partnerPcName = await API.pair(pairingCode);
+    var partnerPcName = await API.pair(context, pairingCode);
     if (partnerPcName != null) {
-      Future.delayed(
-          Duration.zero, () async => GoRouter.of(context).go(Routes.home));
-    } else {
-      Snackbar.showAsync(context, "Ungültiger Pairing-Code.");
-    }
+      // ignore: use_build_context_synchronously
+      GoRouter.of(context).pop();
+    } else {}
   }
 
   @override
