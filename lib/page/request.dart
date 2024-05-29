@@ -33,6 +33,14 @@ class _IncomingRequestPageState extends State<IncomingRequestPage> {
     GoRouter.of(context).pop();
   }
 
+  _deny(BuildContext context) async {
+    await API.verify(context, "__deny__");
+    // ignore: use_build_context_synchronously
+    Snackbar.showAsync(context, "Start verweigert");
+    // ignore: use_build_context_synchronously
+    GoRouter.of(context).pop();
+  }
+
   final _comparisonCodeController = TextEditingController();
 
   @override
@@ -84,14 +92,14 @@ class _IncomingRequestPageState extends State<IncomingRequestPage> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Padding(padding: EdgeInsets.fromLTRB(0, 32, 0, 0)),
+                const Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
                 const Text(
                   "Möchten Sie den Start von ",
                   style: TextStyle(fontSize: 16),
                 ),
                 const Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
                 Text(
-                  "Robin's PC",
+                  API.partnerPCName!,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -110,7 +118,7 @@ class _IncomingRequestPageState extends State<IncomingRequestPage> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(32, 32, 32, 0),
+              padding: const EdgeInsets.fromLTRB(32, 64, 32, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -125,13 +133,22 @@ class _IncomingRequestPageState extends State<IncomingRequestPage> {
                   ),
                   const Padding(padding: EdgeInsets.fromLTRB(16, 0, 16, 0)),
                   Expanded(
-                    child: MaterialButton(
-                      onPressed: () => _verify(context),
-                      color: Colors.teal.shade500,
-                      textColor: Colors.white,
-                      child: const Text("Senden"),
-                    ),
-                  ),
+                      child: Column(
+                    children: [
+                      MaterialButton(
+                        onPressed: () => _deny(context),
+                        color: Colors.red.shade500,
+                        textColor: Colors.white,
+                        child: const Text("Verweigern"),
+                      ),
+                      MaterialButton(
+                        onPressed: () => _verify(context),
+                        color: Colors.teal.shade500,
+                        textColor: Colors.white,
+                        child: const Text("Senden"),
+                      ),
+                    ],
+                  )),
                 ],
               ),
             ),
